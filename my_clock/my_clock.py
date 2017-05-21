@@ -28,7 +28,7 @@ def my_error(msg):
 
 def run_cmd(cmd, options):
     if options['verbose']:
-        print('Run command: {}'.format(cmd))
+        print(('Run command: {}'.format(cmd)))
     system(cmd)
 
 
@@ -131,7 +131,7 @@ def spend_time(_time, out_log=None):
         time.sleep(_time)
         return
 
-    for j in tqdm(range(1, _time + 1)):
+    for j in tqdm(list(range(1, _time + 1))):
         time.sleep(1)
 
 
@@ -145,7 +145,7 @@ def get_option_value(opt_name, default_value, *confs):
 
 def replace_for_config(d):
     d_tmp = dict()
-    for key, val in d.items():
+    for key, val in list(d.items()):
         d_tmp[key.replace('-', '_')] = val
     return d_tmp
 
@@ -220,7 +220,7 @@ def get_time(times, conf_times=[]):
 
 
 def transform_by_trans_opts(value, trans_opts):
-    for _from, _to in trans_opts.items():
+    for _from, _to in list(trans_opts.items()):
         value = value.replace('<{}>'.format(_from), str(_to))
     return value
 
@@ -425,8 +425,8 @@ def main():
 
     if opts.show:
         print('Options:')
-        for key, value in options.items():
-            print('{} {}: {}'.format(INDENTATION, key, value))
+        for key, value in list(options.items()):
+            print(('{} {}: {}'.format(INDENTATION, key, value)))
         sys.exit()
 
     if opts.show_tasks:
@@ -459,9 +459,9 @@ def main():
     if options['hide_popup'] and not options['ring_bell']:
         my_error('Please hide_popup is False or ring_bell is True.\n')
     if options["verbose"]:
-        print('options: {}'.format(str(options)))
-        print('sleep {}'.format(sleep_time))
-        print('begin {} time'.format(opts.task))
+        print(('options: {}'.format(str(options))))
+        print(('sleep {}'.format(sleep_time)))
+        print(('begin {} time'.format(opts.task)))
     try:
         if options['play_bgm']:
             th = PlayThread({'wav_filename': options['bgm_filename'],
@@ -478,7 +478,7 @@ def main():
             notify(options)
 
         if options["verbose"]:
-            print('finished {} time'.format(opts.task))
+            print(('finished {} time'.format(opts.task)))
 
         if options['ring_bell']:
             PlayWav({'wav_filename': options['bell_sound']}).play()
